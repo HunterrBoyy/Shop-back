@@ -1,6 +1,6 @@
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
-const { exist } = require('joi');
+
 const jwt = require('jsonwebtoken')
 
 
@@ -40,7 +40,8 @@ module.exports.userLogin = async (req, res) => {
 }
 
 module.exports.userSignUp = async (req, res) => {
-  const { email, password, fullname } = req.body;
+  const { fullname, email, password,  } = req.body;
+  console.log("req body",req.body)
   try {
     const existUser = await User.findOne({ email: email });
     if (existUser) {
@@ -49,9 +50,10 @@ module.exports.userSignUp = async (req, res) => {
     } else {
       const hashPassword = bcrypt.hashSync(password, 10);
       await User.create({
+        fullname,
         email,
-        password: hashPassword,
-        fullname
+        password: hashPassword
+        
       });
       return res.status(201).json('succesfully registered')
     }
