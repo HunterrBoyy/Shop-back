@@ -61,3 +61,27 @@ module.exports.userSignUp = async (req, res) => {
     return res.status(400).json(`${err}`)
   }
 }
+
+
+
+module.exports.userUpdate = async (req, res) => {
+  const {id} = req.params
+  const { email, fullname, shippingAddress} = req.body;
+  try {
+    const existUser = await User.findById(id);
+   if(existUser){
+      existUser.email =email || existUser.email
+      existUser.fullname =fullname || existUser.fullname
+      existUser.shippingAddress =shippingAddress || existUser.shippingAddress
+
+      await existUser.save()
+      return res.status(200).json("succesfully updated")
+
+    } else {
+      return res.status(401).json('user not found')
+
+    }
+  } catch (err) {
+    return res.status(400).json(`${err}`)
+  }
+}
