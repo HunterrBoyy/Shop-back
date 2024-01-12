@@ -65,10 +65,9 @@ module.exports.userSignUp = async (req, res) => {
 
 
 module.exports.userUpdate = async (req, res) => {
-  const {id} = req.params
   const { email, fullname, shippingAddress} = req.body;
   try {
-    const existUser = await User.findById(id);
+    const existUser = await User.findById(req.userInfo.id);
    if(existUser){
       existUser.email =email || existUser.email
       existUser.fullname =fullname || existUser.fullname
