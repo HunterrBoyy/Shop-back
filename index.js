@@ -8,9 +8,9 @@ const port = 5000;
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
+mongoose.set('strictQuery', false)
 
 mongoose.connect('mongodb+srv://hunterboy:ayush1998@cluster0.fxwwuen.mongodb.net/').then((result) => {
-
   app.listen(port, () => {
     console.log('listening');
   });
